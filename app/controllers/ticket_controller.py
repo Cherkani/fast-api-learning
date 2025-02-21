@@ -27,10 +27,10 @@ def get_all_tickets(db: Session = Depends(get_db)):
 def update_ticket(ticket_id: str, ticket_update: TicketUpdate, db: Session = Depends(get_db)):
     service = TicketService(db)
     try:
-        # Clean the ticket_id by removing quotes
+       
         cleaned_ticket_id = ticket_id.strip('"\'')
         updated_ticket = service.update_ticket(cleaned_ticket_id, ticket_update)
-        # Return the ticket directly without using api_response wrapper
+       
         return updated_ticket
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))

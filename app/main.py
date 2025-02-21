@@ -8,8 +8,6 @@ app = FastAPI(
     description="A CRUD API for managing developers and their tickets.",
     version="1.0.0",
 )
-
-# Initialize database
 init_db()
 
 app.include_router(developer_router, prefix="/api/developers", tags=["Developers"])
