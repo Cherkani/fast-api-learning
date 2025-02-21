@@ -18,7 +18,7 @@ def create_developer(developer: DeveloperSchema, db: Session = Depends(get_db)):
 
 @router.get("/{developer_id}", response_model=DeveloperWithTicketsSchema)
 def get_developer_with_tickets(developer_id: str, db: Session = Depends(get_db)):
-    # Clean the developer_id by removing any quotes
+   
     cleaned_id = developer_id.strip('"\'')
     service = DeveloperService(db)
     try:

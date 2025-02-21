@@ -9,6 +9,6 @@ class Developer(Base):
     id = Column(CHAR(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name = Column(String(100), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
-    level = Column(String(50), nullable=True)  # junior, senior, etc.
+    level = Column(String(50), nullable=True)
 
     tickets = relationship("Ticket", back_populates="assignee")
