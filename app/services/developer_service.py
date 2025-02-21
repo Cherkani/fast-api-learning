@@ -23,3 +23,15 @@ class DeveloperService:
 
     def get_all_developers(self):
         return self.db.query(Developer).all()
+
+    def delete_developer(self, developer_id: str):
+        developer = self.db.query(Developer).options(joinedload(Developer.tickets)).filter(Developer.id == developer_id).first()
+        if not developer:
+            raise ValueError(f"Developer with id {developer_id} not found")
+        
+        if developer.tickets:
+            raise ValueError(f"Cannot delete developer. Developer has {len(developer.tickets)} assigned tickets.")
+        
+        self.db.delete(developer)
+        self.db.commit()
+        return developer

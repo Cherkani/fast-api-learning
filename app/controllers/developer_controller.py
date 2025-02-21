@@ -34,3 +34,18 @@ def get_all_developers(db: Session = Depends(get_db)):
     service = DeveloperService(db)
     developers = service.get_all_developers()
     return api_response(data=developers, message="Developers retrieved successfully")
+
+@router.delete("/{developer_id}")
+def delete_developer(developer_id: str, db: Session = Depends(get_db)):
+    service = DeveloperService(db)
+    try:
+        cleaned_id = developer_id.strip('"\'')
+        deleted_developer = service.delete_developer(cleaned_id)
+        return api_response(
+            data=deleted_developer,
+            message="Developer deleted successfully"
+        )
+    except ValueError as e:
+        if "Cannot delete developer" in str(e):
+            raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=404, detail=str(e))
